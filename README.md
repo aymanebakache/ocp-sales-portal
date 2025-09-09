@@ -242,7 +242,7 @@ Ce projet est sous licence MIT.
 ## 📞 Contact
 
 - **Email** : aymanbakach7@gmail.com
-- **LinkedIn** : [Votre Profil LinkedIn]
+- **LinkedIn** : (https://www.linkedin.com/in/aymane-bakache)
 - **GitHub** : @aymanebakache
 
 ## 🙏 Remerciements
