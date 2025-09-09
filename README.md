@@ -231,24 +231,24 @@ eCommerce-master/
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est sous licence MIT.
 
 ## 👥 Équipe
 
-- **Développeur Principal** : [Votre Nom]
+- **Développeur Principal** : Aymane BAKACHE 
 - **Stage** : OCP Groupe
-- **Période** : [Dates du stage]
+- **Période** : 01-08/2025 ---> 31/08/2025
 
 ## 📞 Contact
 
-- **Email** : [votre.email@example.com]
+- **Email** : aymanbakach7@gmail.com
 - **LinkedIn** : [Votre Profil LinkedIn]
-- **GitHub** : [@votre-username]
+- **GitHub** : @aymanebakache
 
 ## 🙏 Remerciements
 
 - OCP Groupe pour l'opportunité de stage
-- Équipe de développement pour le support
+- Équipe de développement pour le support Rachid Nmissi
 - Communauté .NET pour les ressources
 
 ---
