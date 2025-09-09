@@ -1,0 +1,186 @@
+@model IEnumerable<eCommerce.Model.Product>
+
+@{
+    ViewBag.Title = "Catalogue - OCP Sales Portal";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <!-- Filtres -->
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-green); color: white;">
+                <h4 class="panel-title">Filtres</h4>
+            </div>
+            <div class="panel-body">
+                <h5>Catégories</h5>
+                <div class="list-group">
+                    <a href="@Url.Action("Index")" class="list-group-item @(ViewBag.CurrentCategory == null ? "active" : "")">
+                        Toutes les catégories
+                    </a>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <a href="@Url.Action("Index", new { category = category.Name })" 
+                           class="list-group-item @(ViewBag.CurrentCategory == category.Name ? "active" : "")">
+                            @category.Name
+                        </a>
+                    }
+                </div>
+                
+                <hr />
+                
+                <!-- Recherche -->
+                <h5>Recherche</h5>
+                @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Rechercher un produit..." 
+                               value="@ViewBag.SearchTerm" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <!-- En-tête du catalogue -->
+        <div class="row">
+            <div class="col-md-8">
+                <h2 style="color: var(--ocp-green);">
+                    @if (ViewBag.CurrentCategory != null)
+                    {
+                        <span>@ViewBag.CurrentCategory</span>
+                    }
+                    else
+                    {
+                        <span>Catalogue des Produits</span>
+                    }
+                </h2>
+            </div>
+            <div class="col-md-4 text-right">
+                <p class="text-muted">
+                    @ViewBag.TotalProducts produit(s) trouvé(s)
+                </p>
+            </div>
+        </div>
+        
+        @if (ViewBag.SearchTerm != null)
+        {
+            <div class="alert alert-info">
+                <strong>Résultats de recherche pour :</strong> "@ViewBag.SearchTerm"
+                <a href="@Url.Action("Index")" class="btn btn-sm btn-default pull-right">Effacer</a>
+            </div>
+        }
+        
+        <!-- Grille des produits -->
+        @if (Model.Any())
+        {
+            <div class="row">
+                @foreach (var product in Model)
+                {
+                    <div class="col-md-4 col-sm-6">
+                        <div class="thumbnail" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; min-height: 400px; display: flex; flex-direction: column;">
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@Url.Content("~/Images/" + product.ImageUrl)" alt="@product.Description" 
+                                     style="width: 100%; height: 180px; object-fit: cover; flex-shrink: 0;" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Images/sample_product.jpg")" alt="@product.Description" 
+                                     style="width: 100%; height: 180px; object-fit: cover; flex-shrink: 0;" />
+                            }
+                            <div class="caption" style="display: flex; flex-direction: column; flex: 1;">
+                                <h4 style="font-size: 16px; margin-bottom: 10px;">@product.Description</h4>
+                                @if (product.Category != null)
+                                {
+                                    <span class="label label-info">@product.Category.Name</span>
+                                }
+                                <p class="text-muted" style="margin-top: 10px;">
+                                    <strong>Prix :</strong> @product.Price.ToString("C")
+                                </p>
+                                @if (product.StockQuantity > 0)
+                                {
+                                    <p class="text-success">
+                                        <i class="glyphicon glyphicon-ok"></i> En stock (@product.StockQuantity @product.UnitOfMeasure)
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">
+                                        <i class="glyphicon glyphicon-remove"></i> Rupture de stock
+                                    </p>
+                                }
+                                <div class="btn-group-vertical" style="width: 100%; margin-top: auto;">
+                                    <a href="@Url.Action("Details", new { id = product.ProductId })" 
+                                       class="btn btn-primary btn-sm">Détails</a>
+                                    @if (product.StockQuantity > 0)
+                                    {
+                                        <a href="@Url.Action("AddToBasket", "Basket", new { id = product.ProductId })"
+                                           class="btn btn-success btn-sm">Ajouter au panier</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" class="btn btn-success btn-sm disabled" aria-disabled="true" onclick="return false;">Ajouter au panier</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (ViewBag.TotalPages > 1)
+        {
+            <div class="text-center">
+                <ul class="pagination">
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", new { 
+                                category = ViewBag.CurrentCategory, 
+                                search = ViewBag.SearchTerm, 
+                                page = ViewBag.CurrentPage - 1 
+                            })">&laquo; Précédent</a>
+                        </li>
+                    }
+                    
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="@(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a href="@Url.Action("Index", new { 
+                                category = ViewBag.CurrentCategory, 
+                                search = ViewBag.SearchTerm, 
+                                page = i 
+                            })">@i</a>
+                        </li>
+                    }
+                    
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", new { 
+                                category = ViewBag.CurrentCategory, 
+                                search = ViewBag.SearchTerm, 
+                                page = ViewBag.CurrentPage + 1 
+                            })">Suivant &raquo;</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning">
+                <h4>Aucun produit trouvé</h4>
+                <p>Aucun produit ne correspond à vos critères de recherche.</p>
+            </div>
+        }
+    </div>
+</div> 

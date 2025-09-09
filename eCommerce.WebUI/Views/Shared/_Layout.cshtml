@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - OCP Sales Portal</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        :root {
+            --ocp-green: #2E7D32;
+            --ocp-blue: #1976D2;
+            --ocp-gray: #424242;
+            --ocp-light-gray: #F5F5F5;
+        }
+        
+        .navbar-inverse {
+            background-color: var(--ocp-green);
+            border-color: var(--ocp-green);
+        }
+        
+        .navbar-inverse .navbar-brand,
+        .navbar-inverse .navbar-nav > li > a {
+            color: white;
+        }
+        
+        .navbar-inverse .navbar-nav > .active > a,
+        .navbar-inverse .navbar-nav > .active > a:hover,
+        .navbar-inverse .navbar-nav > .active > a:focus {
+            background-color: var(--ocp-blue);
+        }
+        
+        .btn-primary {
+            background-color: var(--ocp-blue);
+            border-color: var(--ocp-blue);
+        }
+        
+        .btn-success {
+            background-color: var(--ocp-green);
+            border-color: var(--ocp-green);
+        }
+        
+        footer {
+            background-color: var(--ocp-gray);
+            color: white;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("OCP Sales Portal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Catalogue", "Index", "Products")</li>
+                    <li>@Html.ActionLink("Panier", "Index", "Basket")</li>
+                    <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; @DateTime.Now.Year - OCP Groupe - Sales Portal</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p>Portail de vente interne OCP</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        // Correction automatique des caractères accentués mal encodés
+        $(document).ready(function() {
+            // Corriger les caractères mal encodés
+            var textNodes = document.evaluate("//text()", document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+            for (var i = 0; i < textNodes.snapshotLength; i++) {
+                var node = textNodes.snapshotItem(i);
+                var text = node.textContent;
+                
+                // Remplacer les caractères mal encodés
+                text = text.replace(/Ã©/g, 'é');
+                text = text.replace(/Ã¨/g, 'è');
+                text = text.replace(/Ã /g, 'à');
+                text = text.replace(/Ã/g, 'É');
+                
+                if (text !== node.textContent) {
+                    node.textContent = text;
+                }
+            }
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

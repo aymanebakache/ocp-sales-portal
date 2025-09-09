@@ -1,0 +1,114 @@
+@model eCommerce.WebUI.Controllers.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Finaliser la commande - OCP Sales Portal";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h2 style="color: var(--ocp-green);">
+            <i class="glyphicon glyphicon-credit-card"></i> Finaliser votre commande
+        </h2>
+        
+        @using (Html.BeginForm("Checkout", "Basket", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: var(--ocp-blue); color: white;">
+                    <h4 class="panel-title">Informations de livraison</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.CustomerName, "Nom complet *")
+                                @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, "Email *")
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Department, "Département/Service *")
+                        @Html.DropDownListFor(m => m.Department, new SelectList(new[]
+                        {
+                            "Direction Générale",
+                            "Ressources Humaines",
+                            "Finances",
+                            "Production",
+                            "Maintenance",
+                            "Logistique",
+                            "Qualité",
+                            "Sécurité",
+                            "Environnement",
+                            "Recherche & Développement",
+                            "Informatique",
+                            "Autre"
+                        }), "Sélectionnez un département", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address, "Adresse de livraison *")
+                        @Html.TextAreaFor(m => m.Address, new { @class = "form-control", rows = "3", placeholder = "Adresse complète pour la livraison" })
+                        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.InternalRequest, "Demande interne (optionnel)")
+                        @Html.TextAreaFor(m => m.InternalRequest, new { @class = "form-control", rows = "3", placeholder = "Précisions sur votre demande, urgence, etc." })
+                        @Html.ValidationMessageFor(m => m.InternalRequest, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="@Url.Action("Index", "Basket")" class="btn btn-default btn-lg">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Retour au panier
+                    </a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="glyphicon glyphicon-check"></i> Confirmer la commande
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-green); color: white;">
+                <h4 class="panel-title">Récapitulatif</h4>
+            </div>
+            <div class="panel-body">
+                <h3 style="color: var(--ocp-green); margin-top: 0;">
+                    Total : @ViewBag.TotalAmount.ToString("C")
+                </h3>
+                
+                <div class="alert alert-info">
+                    <h5><i class="glyphicon glyphicon-info-sign"></i> Informations importantes</h5>
+                    <ul class="list-unstyled">
+                        <li>• Votre commande sera traitée par le service concerné</li>
+                        <li>• Un email de confirmation vous sera envoyé</li>
+                        <li>• Les délais de livraison dépendent de la disponibilité</li>
+                        <li>• Pour toute question, contactez votre responsable</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+} 

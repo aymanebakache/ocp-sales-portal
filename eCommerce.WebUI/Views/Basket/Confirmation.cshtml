@@ -1,0 +1,133 @@
+@model eCommerce.Model.Order
+
+@{
+    ViewBag.Title = "Confirmation de commande - OCP Sales Portal";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-success">
+            <h2 style="margin-top: 0;">
+                <i class="glyphicon glyphicon-ok-circle"></i> Commande confirmée !
+            </h2>
+            <p>Votre commande a été enregistrée avec succès. Un email de confirmation vous sera envoyé prochainement.</p>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-green); color: white;">
+                <h4 class="panel-title">
+                    <i class="glyphicon glyphicon-file"></i> Détails de la commande #@Model.OrderId
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><strong>Informations client</strong></h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Nom :</strong> @Model.CustomerName</li>
+                            <li><strong>Email :</strong> @Model.Email</li>
+                            <li><strong>Département :</strong> @Model.Department</li>
+                            <li><strong>Adresse :</strong> @Model.Address</li>
+                        </ul>
+                        
+                        @if (!string.IsNullOrEmpty(Model.InternalRequest))
+                        {
+                            <h5><strong>Demande interne</strong></h5>
+                            <p>@Model.InternalRequest</p>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <h5><strong>Informations de commande</strong></h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Numéro de commande :</strong> #@Model.OrderId</li>
+                            <li><strong>Date de commande :</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</li>
+                            <li><strong>Statut :</strong> <span class="label label-warning">@Model.Status</span></li>
+                            <li><strong>Total :</strong> <span style="color: var(--ocp-green); font-weight: bold;">@Model.TotalAmount.ToString("C")</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-blue); color: white;">
+                <h4 class="panel-title">
+                    <i class="glyphicon glyphicon-list"></i> Articles commandés
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Prix unitaire</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderItems)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                                                {
+                                                    <img src="@Url.Content("~/Images/" + item.Product.ImageUrl)" alt="@item.Product.Description" 
+                                                         style="width: 50px; height: 50px; object-fit: cover;" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="@Url.Content("~/Images/sample_product.jpg")" alt="@item.Product.Description" 
+                                                         style="width: 50px; height: 50px; object-fit: cover;" />
+                                                }
+                                            </div>
+                                            <div class="col-md-10">
+                                                <strong>@item.Product.Description</strong>
+                                                @if (item.Product.Category != null)
+                                                {
+                                                    <br />
+                                                    <span class="label label-info">@item.Product.Category.Name</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>@item.UnitPrice.ToString("C")</td>
+                                    <td>@item.Quantity</td>
+                                    <td><strong>@((item.Quantity * item.UnitPrice).ToString("C"))</strong></td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-right"><strong>Total :</strong></td>
+                                <td><strong style="color: var(--ocp-green);">@Model.TotalAmount.ToString("C")</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info">
+            <h5><i class="glyphicon glyphicon-info-sign"></i> Prochaines étapes</h5>
+            <ul>
+                <li>Votre commande sera traitée par le département @Model.Department</li>
+                <li>Vous recevrez un email de confirmation dans les prochaines heures</li>
+                <li>Le service concerné vous contactera pour organiser la livraison</li>
+                <li>Pour toute question, contactez votre responsable ou le service concerné</li>
+            </ul>
+        </div>
+        
+        <div class="text-center" style="margin-top: 30px;">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+                <i class="glyphicon glyphicon-home"></i> Retour à l'accueil
+            </a>
+            <a href="@Url.Action("Index", "Products")" class="btn btn-success btn-lg">
+                <i class="glyphicon glyphicon-shopping-cart"></i> Continuer les achats
+            </a>
+        </div>
+    </div>
+</div> 

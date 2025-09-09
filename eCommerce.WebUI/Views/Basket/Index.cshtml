@@ -1,0 +1,130 @@
+@model IEnumerable<eCommerce.Model.BasketItem>
+
+@{
+    ViewBag.Title = "Mon Panier - OCP Sales Portal";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 style="color: var(--ocp-green);">
+            <i class="glyphicon glyphicon-shopping-cart"></i> Mon Panier
+        </h2>
+        
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Catégorie</th>
+                            <th>Prix unitaire</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                                            {
+                                                <img src="@Url.Content("~/Images/" + item.Product.ImageUrl)" alt="@item.Product.Description" 
+                                                     style="width: 50px; height: 50px; object-fit: cover;" />
+                                            }
+                                            else
+                                            {
+                                                <img src="@Url.Content("~/Images/sample_product.jpg")" alt="@item.Product.Description" 
+                                                     style="width: 50px; height: 50px; object-fit: cover;" />
+                                            }
+                                        </div>
+                                        <div class="col-md-10">
+                                            <strong>@item.Product.Description</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if (item.Product.Category != null)
+                                    {
+                                        <span class="label label-info">@item.Product.Category.Name</span>
+                                    }
+                                </td>
+                                <td>@item.Product.Price.ToString("C")</td>
+                                <td>
+                                    @using (Html.BeginForm("UpdateQuantity", "Basket", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="basketItemId" value="@item.BasketItemId" />
+                                        <div class="input-group" style="width: 120px;">
+                                            <input type="number" name="quantity" value="@item.Quantity" 
+                                                   min="1" max="@item.Product.StockQuantity" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="glyphicon glyphicon-refresh"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    }
+                                </td>
+                                <td><strong>@((item.Quantity * item.Product.Price).ToString("C"))</strong></td>
+                                <td>
+                                    @using (Html.BeginForm("RemoveItem", "Basket", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="basketItemId" value="@item.BasketItemId" />
+                                        <button type="submit" class="btn btn-danger btn-sm" 
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
+                                            <i class="glyphicon glyphicon-trash"></i> Supprimer
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="@Url.Action("Index", "Products")" class="btn btn-default">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Continuer les achats
+                    </a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="well" style="background-color: var(--ocp-light-gray);">
+                        <h4>Total de la commande : <strong style="color: var(--ocp-green);">@ViewBag.TotalAmount.ToString("C")</strong></h4>
+                        <a href="@Url.Action("Checkout")" class="btn btn-success btn-lg">
+                            <i class="glyphicon glyphicon-credit-card"></i> Procéder à la commande
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <h4>Votre panier est vide</h4>
+                <p>Vous n'avez pas encore ajouté de produits à votre panier.</p>
+                <a href="@Url.Action("Index", "Products")" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-shopping-cart"></i> Découvrir nos produits
+                </a>
+            </div>
+        }
+    </div>
+</div> 

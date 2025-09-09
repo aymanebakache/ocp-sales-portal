@@ -1,0 +1,83 @@
+﻿@model IEnumerable<eCommerce.Model.Product>
+
+@{
+    ViewBag.Title = "Accueil";
+}
+
+<div class="jumbotron" style="background-color: var(--ocp-light-gray); border: 1px solid var(--ocp-green);">
+    <div class="container">
+        <h1 style="color: var(--ocp-green);">Bienvenue sur OCP Sales Portal</h1>
+        <p class="lead">Portail de vente interne d'OCP Groupe - Accédez à notre catalogue de produits et services techniques.</p>
+        <p><a href="@Url.Action("Index", "Products")" class="btn btn-primary btn-lg">Découvrir le catalogue &raquo;</a></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-blue); color: white;">
+                <h3 class="panel-title">Engrais</h3>
+            </div>
+            <div class="panel-body">
+                <p>Découvrez notre gamme complète d'engrais et fertilisants pour l'agriculture moderne.</p>
+                <a href="@Url.Action("Index", "Products", new { category = "Engrais" })" class="btn btn-success">Voir les produits</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-green); color: white;">
+                <h3 class="panel-title">Équipements Industriels</h3>
+            </div>
+            <div class="panel-body">
+                <p>Équipements et machines pour l'industrie minière et manufacturière.</p>
+                <a href="@Url.Action("Index", "Products", new { category = "Equipements" })" class="btn btn-success">Voir les produits</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: var(--ocp-gray); color: white;">
+                <h3 class="panel-title">Services Techniques</h3>
+            </div>
+            <div class="panel-body">
+                <p>Services de maintenance, formation et support technique spécialisés.</p>
+                <a href="@Url.Action("Index", "Products", new { category = "Services" })" class="btn btn-success">Voir les services</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="color: var(--ocp-green); margin-top: 30px;">Produits en Vitrine</h2>
+            <div class="row">
+                @foreach (var item in Model.Take(6))
+                {
+                    <div class="col-md-4 col-sm-6">
+                        <div class="thumbnail" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@Url.Content("~/Images/" + item.ImageUrl)" alt="@item.Description" style="width: 100%; height: 200px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Images/sample_product.jpg")" alt="@item.Description" style="width: 100%; height: 200px; object-fit: cover;" />
+                            }
+                            <div class="caption">
+                                <h4>@item.Description</h4>
+                                <p class="text-muted">Prix: @item.Price.ToString("C")</p>
+                                <p>
+                                    <a href="@Url.Action("Details", "Home", new { id = item.ProductId })" class="btn btn-primary">Détails</a>
+                                    <a href="@Url.Action("AddToBasket", "Basket", new { id = item.ProductId })" class="btn btn-success">Ajouter au panier</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
