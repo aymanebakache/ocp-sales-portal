@@ -1,41 +1,41 @@
-# 🏭 OCP Sales Portal - eCommerce Platform
+# OCP Sales Portal - eCommerce Platform
 
 [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue.svg)](https://dotnet.microsoft.com/download/dotnet-framework)
 [![Entity Framework](https://img.shields.io/badge/Entity%20Framework-6.1.3-green.svg)](https://docs.microsoft.com/en-us/ef/)
 [![ASP.NET MVC](https://img.shields.io/badge/ASP.NET%20MVC-5.2.3-red.svg)](https://docs.microsoft.com/en-us/aspnet/mvc/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 📋 Description
+## Description
 
 **OCP Sales Portal** est une plateforme eCommerce interne développée pour le Groupe OCP (Office Chérifien des Phosphates). Cette application permet aux employés d'OCP de commander des produits industriels, des équipements, des pièces détachées et des services techniques directement via un portail web sécurisé.
 
-## 🎯 Fonctionnalités Principales
+## Fonctionnalités Principales
 
-### 🛍️ **Catalogue de Produits**
+### **Catalogue de Produits**
 - Navigation par catégories (Engrais, Équipements Industriels, Pièces Détachées, etc.)
 - Recherche avancée avec filtres
 - Pagination pour optimiser les performances
 - Affichage des spécifications techniques détaillées
 - Gestion des stocks en temps réel
 
-### 🛒 **Gestion du Panier**
+### **Gestion du Panier**
 - Ajout/suppression de produits
 - Modification des quantités
 - Calcul automatique des totaux
 - Persistance de session
 
-### 📦 **Système de Commandes**
+### **Système de Commandes**
 - Processus de checkout simplifié
 - Informations client et département
 - Génération de commandes avec numérotation
 - Confirmation de commande
 
-### 👨‍💼 **Interface d'Administration**
+### **Interface d'Administration**
 - Gestion des produits (CRUD complet)
 - Gestion des catégories
 - Interface sécurisée pour les administrateurs
 
-## 🏗️ Architecture Technique
+## Architecture Technique
 
 ### **Pattern Architectural**
 - **Architecture N-Tier** avec séparation claire des responsabilités
@@ -64,7 +64,7 @@
 | **jQuery** | 3.1.1 | Bibliothèque JavaScript |
 | **Unity Container** | 5.11.1 | Injection de dépendances |
 
-## 🚀 Installation et Configuration
+## Installation et Configuration
 
 ### **Prérequis**
 - Visual Studio 2017 ou supérieur
@@ -95,7 +95,7 @@
    - Appuyer sur F5 ou Ctrl+F5
    - L'application s'ouvrira dans votre navigateur
 
-## 📊 Modèle de Données
+## Modèle de Données
 
 ### **Entités Principales**
 - **Product** : Produits avec spécifications techniques
@@ -112,7 +112,7 @@
 - Product → OrderItems (One-to-Many)
 - Basket → BasketItems (One-to-Many)
 
-## 🎨 Interface Utilisateur
+## Interface Utilisateur
 
 ### **Design System**
 - **Couleurs OCP** : Vert corporatif (#2E7D32), Bleu (#1976D2)
@@ -128,7 +128,7 @@
 - **Checkout** : Processus de commande
 - **Administration** : Interface de gestion
 
-## 🔧 Configuration
+## Configuration
 
 ### **Chaîne de Connexion**
 ```xml
@@ -147,14 +147,14 @@
 </appSettings>
 ```
 
-## 📈 Données de Test
+## Données de Test
 
 L'application inclut un initialiseur de données avec :
 - **6 catégories** : Engrais, Équipements Industriels, Pièces Détachées, Services Techniques, Outillage, Sécurité
 - **12 produits** : Exemples réalistes d'équipements OCP
 - **Spécifications techniques** : Données détaillées pour chaque produit
 
-## 🚧 Développement
+## Développement
 
 ### **Structure du Projet**
 ```
@@ -181,7 +181,7 @@ eCommerce-master/
 - `TestOCPSalesPortal.ps1` : Tests de l'application
 - `UpdatePackages.ps1` : Mise à jour des packages
 
-## 🔒 Sécurité
+## Sécurité
 
 ### **Mesures Implémentées**
 - Validation des entrées utilisateur
@@ -204,7 +204,7 @@ eCommerce-master/
 4. Optimiser les performances (cache, compression)
 5. Mettre en place la surveillance
 
-## 📝 Changelog
+## Changelog
 
 ### **Version 1.0.0** (2024)
 - ✅ Architecture N-Tier implémentée
@@ -214,7 +214,7 @@ eCommerce-master/
 - ✅ Design responsive OCP
 - ✅ Données de test complètes
 
-## 🤝 Contribution
+## Contribution
 
 ### **Comment Contribuer**
 1. Fork le projet
@@ -229,23 +229,23 @@ eCommerce-master/
 - Ajouter des tests unitaires
 - Documenter les nouvelles fonctionnalités
 
-## 📄 Licence
+## Licence
 
 Ce projet est sous licence MIT.
 
-## 👥 Équipe
+## Équipe
 
 - **Développeur Principal** : Aymane BAKACHE 
 - **Stage** : OCP Groupe
 - **Période** : 01-08/2025 ---> 31/08/2025
 
-## 📞 Contact
+## Contact
 
 - **Email** : aymanbakach7@gmail.com
 - **LinkedIn** : (https://www.linkedin.com/in/aymane-bakache)
 - **GitHub** : @aymanebakache
 
-## 🙏 Remerciements
+## Remerciements
 
 - OCP Groupe pour l'opportunité de stage
 - Équipe de développement pour le support Rachid Nmissi
